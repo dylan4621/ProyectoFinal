@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Rincón del Contador</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Estilos para el modal de login */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: relative;
+            background: linear-gradient(135deg, #4a9d8e, #2c8577);
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #f1f1f1;
+        }
+
+        .login-container {
+            padding: 40px 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .login-icon {
+            margin-bottom: 30px;
+        }
+
+        .login-icon svg {
+            width: 60px;
+            height: 60px;
+            color: white;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .input-group {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 0 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .input-icon {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        .input-group input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 15px 0;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .login-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .remember-me input {
+            margin-right: 8px;
+        }
+
+        .forgot-password {
+            color: white;
+            font-size: 14px;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .forgot-password:hover {
+            opacity: 0.8;
+        }
+
+        .login-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .login-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+            }
+            
+            .login-container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="#">El Rincón del Contador</a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="servicios.html" class="btn btn-primary">Servicios Que Ofrecemos</a></li>
+                    <li><a href="contacto.html" class="btn btn-primary">Contacto</a></li>
+                    <li><a href="#" class="btn btn-secondary" id="loginBtn">Iniciar Sesión</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-video-container">
+            <video src="videos/video1.mp4" autoplay loop muted class="active"></video>
+            <video src="videos/video2.mp4" autoplay loop muted></video>
+            <video src="videos/video3.mp4" autoplay loop muted></video>
+            <video src="videos/video4.mp4" autoplay loop muted></video>
+        </div>
+
+        <div class="container">
+            <div class="hero-content">
+                <p class="subtitle">CONOCE MI TRABAJO</p>
+                <h1>El Rincón del Contador</h1>
+                <p>Servicios contables profesionales para tu negocio. Manejo de libros, declaraciones fiscales, asesoría tributaria y más. Tu tranquilidad financiera es mi prioridad.</p>
+                <div class="hero-buttons">
+                    <a href="informacion-contable.html" class="btn btn-primary">Ver información Contable</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de Login -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="login-container">
+                <div class="login-icon">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+                <form class="login-form">
+                    <div class="input-group">
+                        <span class="input-icon">👤</span>
+                        <input type="text" placeholder="Username" required>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-icon">🔒</span>
+                        <input type="password" placeholder="Password" required>
+                    </div>
+                    <div class="login-options">
+                        <label class="remember-me">
+                            <input type="checkbox"> Remember me
+                        </label>
+                        <a href="#" class="forgot-password">Forgot Password</a>
+                    </div>
+                    <button type="submit" class="login-btn">LOGIN</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 El Rincón del Contador. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const videos = document.querySelectorAll('.hero-video-container video');
+            let currentIndex = 0;
+
+            function showNextVideo() {
+                // Oculta todos los videos
+                videos.forEach(video => {
+                    video.classList.remove('active');
+                    video.pause(); // Pausa el video actual para asegurar que el siguiente inicie correctamente
+                    video.currentTime = 0; // Reinicia el tiempo del video si quieres que siempre comience desde el principio
+                });
+
+                // Calcula el índice del siguiente video
+                currentIndex = (currentIndex + 1) % videos.length;
+
+                // Muestra el siguiente video y lo reproduce
+                const nextVideo = videos.item(currentIndex);
+                nextVideo.classList.add('active');
+                nextVideo.play();
+            }
+
+            // Inicia la reproducción del primer video al cargar
+            if (videos.length > 0) {
+                videos.item(0).classList.add('active');
+                videos.item(0).play(); // Asegurarse de que el primer video se reproduzca al cargar
+            }
+
+            // Configura el intervalo para cambiar de video cada 10 segundos (10000 milisegundos)
+            setInterval(showNextVideo, 10000);
+
+            // Funcionalidad del modal de login
+            const loginBtn = document.getElementById('loginBtn');
+            const modal = document.getElementById('loginModal');
+            const closeBtn = document.querySelector('.close');
+
+            // Abrir modal
+            loginBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden'; // Evita el scroll del body
+            });
+
+            // Cerrar modal con X
+            closeBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Restaura el scroll del body
+            });
+
+            // Cerrar modal al hacer clic fuera
+            window.addEventListener('click', function(event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            // Cerrar modal con ESC
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && modal.style.display === 'block') {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            // Manejar envío del formulario
+            const loginForm = document.querySelector('.login-form');
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                // Aquí puedes agregar la lógica de autenticación
+                alert('Funcionalidad de login en desarrollo');
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+        });
+    </script>
+
+</body>
+</html>
